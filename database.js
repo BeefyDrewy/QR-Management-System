@@ -167,7 +167,7 @@
         volunteers.forEach((volunteer) => {
             try {
                 const row = document.createElement("tr");
-                row.className = "hover:bg-surface-container-lowest transition-colors";
+                row.className = "hover:bg-surface-container-lowest transition-colors cursor-pointer";
 
                 const fullName = `${volunteer["first name"] || ''} ${volunteer["name"] || ''}`.trim();
                 const idNumber = volunteer["ID number"] || "-";
@@ -180,6 +180,19 @@
                     <td class="px-lg py-md">${gender}</td>
                     <td class="px-lg py-md">${birthdate}</td>
                 `;
+
+                // Add click event listener
+                row.addEventListener("click", () => {
+                    const volunteerData = {
+                        name: fullName,
+                        idNumber: idNumber,
+                        gender: gender,
+                        birthDate: birthdate,
+                        fullRecord: volunteer
+                    };
+                    localStorage.setItem("selectedVolunteer", JSON.stringify(volunteerData));
+                    window.location.href = "vltr-profiel.html";
+                });
 
                 volunteerTableBody.appendChild(row);
             } catch (err) {

@@ -1,4 +1,3 @@
-// Supabase Client for Vanilla JavaScript
 const { createClient } = window.supabase;
 
 // Voeg hier je Supabase URL en key in

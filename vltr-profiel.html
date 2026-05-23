@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="vltr-profiel-style.css">
+
+  <!-- Tailwind Config -->
+  <script src="tailwind-config.js"></script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-surface border-b border-outline-variant flex justify-between items-center px-margin-desktop w-full h-16 sticky top-0 z-50">
+    <div class="flex items-center gap-md">
+      <button id="backButton" class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 active:opacity-60">
+        arrow_back
+      </button>
+
+      <h1 class="font-headline-md text-headline-md font-bold text-primary">
+        Vrijwilligersprofiel
+      </h1>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="flex-1 px-margin-desktop py-lg">
+    <section class="bg-white border border-outline-variant rounded-xl p-lg max-w-2xl">
+      <div class="mb-lg">
+        <h2 class="text-3xl font-bold text-on-background" id="volunteerName">
+          Naam laden...
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+        <!-- ID Nummer -->
+        <div class="profile-field">
+          <label class="font-label-md text-secondary text-label-md">ID Nummer</label>
+          <p id="volunteerID" class="font-body-lg text-on-background mt-sm">
+            --
+          </p>
+        </div>
+
+        <!-- Geslacht -->
+        <div class="profile-field">
+          <label class="font-label-md text-secondary text-label-md">Geslacht</label>
+          <p id="volunteerGender" class="font-body-lg text-on-background mt-sm">
+            --
+          </p>
+        </div>
+
+        <!-- Geboortedatum -->
+        <div class="profile-field">
+          <label class="font-label-md text-secondary text-label-md">Geboortedatum</label>
+          <p id="volunteerBirthDate" class="font-body-lg text-on-background mt-sm">
+            --
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-md mt-lg pt-lg border-t border-outline-variant">
+        <button class="flex-1 btn-edit bg-primary text-on-primary px-lg py-md rounded-lg cursor-pointer hover:opacity-90 font-label-lg">
+          Bewerken
+        </button>
+        <button class="flex-1 btn-delete bg-error text-on-primary px-lg py-md rounded-lg cursor-pointer hover:opacity-90 font-label-lg">
+          Verwijderen
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS -->
+  <script src="vltr-profiel.js"></script>
+
+</body>
+</html>

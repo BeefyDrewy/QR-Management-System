@@ -1,10 +1,3 @@
-// Row click interaction
-document.querySelectorAll("tbody tr").forEach(row => {
-  row.addEventListener("click", (e) => {
-    console.log("Opening volunteer details...");
-  });
-});
-
 // Search filter
 const searchInput = document.getElementById("searchInput");
 
