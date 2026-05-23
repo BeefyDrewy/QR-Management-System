@@ -1,87 +1,246 @@
 <!DOCTYPE html>
-<html class="light" lang="nl">
+<html lang="nl">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vrijwilligersprofiel</title>
+  <link rel="stylesheet" href="vltr-profiel-style.css" />
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="vltr-profiel-style.css">
-
-  <!-- Tailwind Config -->
-  <script src="tailwind-config.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
-<body class="bg-background text-on-background min-h-screen flex flex-col">
+<body>
 
   <!-- HEADER -->
-  <header class="bg-surface border-b border-outline-variant flex justify-between items-center px-margin-desktop w-full h-16 sticky top-0 z-50">
-    <div class="flex items-center gap-md">
-      <button id="backButton" class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 active:opacity-60">
-        arrow_back
+  <header class="topbar">
+    <div class="menu-logo">
+      <button id="backButton" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
       </button>
-
-      <h1 class="font-headline-md text-headline-md font-bold text-primary">
-        Vrijwilligersprofiel
-      </h1>
+      <h1>Suriname Red Cross</h1>
     </div>
+
+    <img src="https://i.pravatar.cc/100" class="profile-mini" alt="">
   </header>
 
   <!-- CONTENT -->
-  <main class="flex-1 px-margin-desktop py-lg">
-    <section class="bg-white border border-outline-variant rounded-xl p-lg max-w-2xl">
-      <div class="mb-lg">
-        <h2 class="text-3xl font-bold text-on-background" id="volunteerName">
-          Naam laden...
-        </h2>
-      </div>
+  <main class="container">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-        <!-- ID Nummer -->
-        <div class="profile-field">
-          <label class="font-label-md text-secondary text-label-md">ID Nummer</label>
-          <p id="volunteerID" class="font-body-lg text-on-background mt-sm">
-            --
-          </p>
-        </div>
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      Dashboard > Vrijwilligers
+    </div>
 
-        <!-- Geslacht -->
-        <div class="profile-field">
-          <label class="font-label-md text-secondary text-label-md">Geslacht</label>
-          <p id="volunteerGender" class="font-body-lg text-on-background mt-sm">
-            --
-          </p>
-        </div>
+    <h2 class="page-title">Vrijwilligersprofiel</h2>
 
-        <!-- Geboortedatum -->
-        <div class="profile-field">
-          <label class="font-label-md text-secondary text-label-md">Geboortedatum</label>
-          <p id="volunteerBirthDate" class="font-body-lg text-on-background mt-sm">
-            --
-          </p>
+    <!-- EDIT BUTTON -->
+    <button class="edit-btn">
+      <i class="fa-solid fa-pen"></i>
+      Edit Information
+    </button>
+
+    <!-- PROFILE CARD -->
+    <section class="card profile-card">
+
+      <div class="profile-image-wrapper">
+        <img src="https://i.pravatar.cc/300" alt="">
+        <div class="camera-icon">
+          <i class="fa-solid fa-camera"></i>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex gap-md mt-lg pt-lg border-t border-outline-variant">
-        <button class="flex-1 btn-edit bg-primary text-on-primary px-lg py-md rounded-lg cursor-pointer hover:opacity-90 font-label-lg">
-          Bewerken
-        </button>
-        <button class="flex-1 btn-delete bg-error text-on-primary px-lg py-md rounded-lg cursor-pointer hover:opacity-90 font-label-lg">
-          Verwijderen
-        </button>
+      <h2 id="volunteerName">Johan van der Meer</h2>
+      <p class="role">
+        GECERTIFICEERD EERSTE HULP VERLENER
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="info-grid">
+
+        <div>
+          <span>Voornaam</span>
+          <h4 id="volunteerFirstName">Johan</h4>
+        </div>
+
+        <div>
+          <span>Naam</span>
+          <h4 id="volunteerLastName">van der Meer</h4>
+        </div>
+
+        <div>
+          <span>Geboortedatum</span>
+          <h4 id="volunteerBirthDate">14 Maart 1985</h4>
+        </div>
+
+        <div>
+          <span>Gender</span>
+          <h4 id="volunteerGender">Man</h4>
+        </div>
+
+        <div>
+          <span>Bloedgroep</span>
+          <h4 class="blood">O-Positief</h4>
+        </div>
+
+        <div>
+          <span>Status</span>
+          <h4 class="status">ACTIEF</h4>
+        </div>
+
+        <div>
+          <span>Lid Sinds</span>
+          <h4>Januari 2018</h4>
+        </div>
+
       </div>
+
     </section>
+
+    <!-- QR CARD -->
+    <section class="badge-card">
+
+      <div class="badge-top">
+        <div>
+          <span>ID Nummer</span>
+          <h3 id="volunteerID">SRC-2023-9842</h3>
+        </div>
+
+        <i class="fa-solid fa-gear"></i>
+      </div>
+
+      <div class="qr-box">
+        <img id="volunteerQR" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SRC-7732-X" alt="">
+      </div>
+
+      <h2>Vrijwilligers Badge</h2>
+
+      <div class="badge-id" id="volunteerBadgeID">#SR-7732-X</div>
+
+      <p class="scan-text">
+        Scan voor validatie en incident logging
+      </p>
+
+    </section>
+
+    <!-- CONTACT -->
+    <section class="card">
+
+      <div class="section-title">
+        <i class="fa-regular fa-id-card"></i>
+        <h3>CONTACT DETAILS</h3>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-regular fa-envelope"></i>
+        <div>
+          <span>E-mail</span>
+          <p>j.vandermeer@email.sr</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-phone"></i>
+        <div>
+          <span>Telefoon</span>
+          <p>+597 888 1234</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <span>Adres</span>
+          <p>Prins Hendrikstraat 42, Paramaribo</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ROLE -->
+    <section class="card">
+
+      <div class="section-title">
+        <i class="fa-solid fa-briefcase"></i>
+        <h3>ROL & AFDELING</h3>
+      </div>
+
+      <div class="role-box">
+        <span>Huidige Rol</span>
+        <h3>Teamleider Noodhulp</h3>
+      </div>
+
+      <div class="role-box">
+        <span>Afdeling</span>
+        <h3>Rampenbestrijding (DM)</h3>
+      </div>
+
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section class="card">
+
+      <div class="cert-header">
+        <div class="section-title">
+          <i class="fa-regular fa-shield"></i>
+          <h3>CERTIFICERINGEN</h3>
+        </div>
+
+        <a href="#">Bekijk Alles</a>
+      </div>
+
+      <div class="cert-item">
+        <div class="left">
+          <i class="fa-solid fa-circle-check green"></i>
+          EHBO Gevorderd
+        </div>
+
+        <span>2025</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="left">
+          <i class="fa-solid fa-circle-check green"></i>
+          Water Rescue 1
+        </div>
+
+        <span>2024</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="left">
+          <i class="fa-solid fa-circle-exclamation red"></i>
+          Brandveiligheid
+        </div>
+
+        <span class="expired">Verlopen</span>
+      </div>
+
+    </section>
+
   </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <div class="nav-item">
+      <i class="fa-solid fa-table-cells-large"></i>
+      <span>Dashboard</span>
+    </div>
+
+    <div class="nav-item active">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Vrijwillers</span>
+    </div>
+
+    <div class="nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </div>
+
+  </nav>
 
   <!-- JS -->
   <script src="vltr-profiel.js"></script>
