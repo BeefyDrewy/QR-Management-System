@@ -15,6 +15,8 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+  
+  <link rel="icon" href="favicon.ico" type="Logo-SRK">
 
   <!-- Tailwind Config -->
   <script src="tailwind-config.js"></script>
@@ -95,8 +97,8 @@
           <tr>
             <th class="px-lg py-md">Vrijwilliger</th>
             <th class="px-lg py-md">ID Nummer</th>
-            <th class="px-lg py-md">Afdeling</th>
-            <th class="px-lg py-md">Status</th>
+            <th class="px-lg py-md">Geslacht</th>
+            <th class="px-lg py-md">Geboortedatum</th>
           </tr>
         </thead>
 
@@ -105,22 +107,22 @@
           <tr class="hover:bg-surface-container-lowest transition-colors">
             <td class="px-lg py-md">Johan Klaver</td>
             <td class="px-lg py-md">SRK-2024-0012</td>
-            <td class="px-lg py-md">Rampenbestrijding</td>
-            <td class="px-lg py-md text-green-600">Actief</td>
+            <td class="px-lg py-md">M</td>
+            <td class="px-lg py-md">15-05-1990</td>
           </tr>
 
           <tr class="hover:bg-surface-container-lowest transition-colors">
             <td class="px-lg py-md">Amara Wijdenbosch</td>
             <td class="px-lg py-md">SRK-2024-0089</td>
-            <td class="px-lg py-md">Eerste Hulp</td>
-            <td class="px-lg py-md text-green-600">Actief</td>
+            <td class="px-lg py-md">F</td>
+            <td class="px-lg py-md">22-03-1988</td>
           </tr>
 
           <tr class="hover:bg-surface-container-lowest transition-colors">
             <td class="px-lg py-md">Kenneth Pinas</td>
             <td class="px-lg py-md">SRK-2023-0451</td>
-            <td class="px-lg py-md">Sociale Hulp</td>
-            <td class="px-lg py-md text-gray-500">Inactief</td>
+            <td class="px-lg py-md">M</td>
+            <td class="px-lg py-md">10-11-1992</td>
           </tr>
 
         </tbody>
@@ -167,17 +169,6 @@
           <input type="date" name="birthdate" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
         </div>
 
-        <div>
-          <label class="block font-label-lg text-label-lg mb-sm">Afdeling</label>
-          <select name="department" class="w-full px-md py-sm border border-outline-variant rounded-lg">
-            <option value="Algemeen">Algemeen</option>
-            <option value="Rampenbestrijding">Rampenbestrijding</option>
-            <option value="Eerste Hulp">Eerste Hulp</option>
-            <option value="Sociale Hulp">Sociale Hulp</option>
-            <option value="Bloedinzameling">Bloedinzameling</option>
-          </select>
-        </div>
-
         <div class="flex gap-md pt-md">
           <button type="submit" class="flex-1 bg-primary text-on-primary px-lg py-sm rounded-lg font-label-lg">Toevoegen</button>
           <button type="button" class="btn-close-modal flex-1 bg-outline text-on-background px-lg py-sm rounded-lg font-label-lg cursor-pointer">Annuleren</button>
@@ -187,7 +178,9 @@
   </div>
 
   <!-- JS -->
-  <script src="database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="supabaseClient.js"></script>
+  <script type="module" src="database.js"></script>
   <script src="script.js"></script>
 
 </body>

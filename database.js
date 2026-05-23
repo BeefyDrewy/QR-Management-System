@@ -1,25 +1,81 @@
 // Vrijwilligers Database Management System
-// Loads volunteer data from vrijwilligers.json and manages adding new volunteers
+// Loads volunteer data from Supabase and manages adding new volunteers
 
 (async function () {
-    // Fetch initial volunteer data from vrijwilligers.json
-    const data = await fetch("vrijwilligers.json");
-    const res = await data.json();
-    let volunteers = res;
+    // Initialize Supabase client
+    const supabase = window.supabaseClient;
+    
+    // Check if Supabase client is available
+    if (!supabase) {
+        console.error('Supabase client not initialized');
+        document.getElementById("volunteerTable").innerHTML = 
+            '<tr><td colspan="4" class="px-lg py-md text-red-600">Error: Supabase connection failed</td></tr>';
+        return;
+    }
 
     // DOM elements
     const addVolunteerBtn = document.querySelector(".btn-add-volunteer");
     const addVolunteerModal = document.querySelector(".modal-add-volunteer");
     const addVolunteerForm = document.querySelector(".form-add-volunteer");
     const volunteerTableBody = document.getElementById("volunteerTable");
-
-    // Modal close button
     const closeModalBtn = document.querySelector(".btn-close-modal");
+
+    let volunteers = [];
+    let isLoading = false;
+
+    // Show loading state in table
+    const showLoadingState = () => {
+        volunteerTableBody.innerHTML = '<tr><td colspan="4" class="px-lg py-md">Loading...</td></tr>';
+    };
+
+    // Show error state in table
+    const showErrorState = (message) => {
+        volunteerTableBody.innerHTML = 
+            `<tr><td colspan="4" class="px-lg py-md text-red-600">Error: ${message}</td></tr>`;
+    };
+
+    // Fetch volunteers from Supabase
+    const fetchVolunteers = async () => {
+        try {
+            showLoadingState();
+            isLoading = true;
+
+            const { data, error } = await supabase
+                .from('volunteers')
+                .select('*')
+                .order('id', { ascending: false });
+
+            if (error) {
+                console.error('Supabase error:', error);
+                showErrorState(`Failed to load volunteers: ${error.message}`);
+                return false;
+            }
+
+            if (!data) {
+                console.warn('No data returned from Supabase');
+                volunteers = [];
+                showErrorState('No volunteers found');
+                return false;
+            }
+
+            volunteers = data;
+            renderVolunteerTable();
+            isLoading = false;
+            return true;
+        } catch (err) {
+            console.error('Fetch error:', err);
+            showErrorState(`Network error: ${err.message}`);
+            isLoading = false;
+            return false;
+        }
+    };
 
     // Show add volunteer modal
     if (addVolunteerBtn) {
         addVolunteerBtn.addEventListener("click", () => {
-            addVolunteerModal.style.display = "flex";
+            if (addVolunteerModal) {
+                addVolunteerModal.style.display = "flex";
+            }
         });
     }
 
@@ -35,67 +91,109 @@
     // Close modal with button
     if (closeModalBtn) {
         closeModalBtn.addEventListener("click", () => {
-            addVolunteerModal.style.display = "none";
+            if (addVolunteerModal) {
+                addVolunteerModal.style.display = "none";
+            }
         });
     }
 
     // Handle add volunteer form submit
     if (addVolunteerForm) {
-        addVolunteerForm.addEventListener("submit", (e) => {
+        addVolunteerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            // Collect form data
-            const formData = new FormData(addVolunteerForm);
-            const newVolunteer = {
-                "": `${new Date().getFullYear()}/V-${volunteers.length + 1}`,
-                "Name": formData.get("surname") || "",
-                "First name": formData.get("firstname") || "",
-                "Gender": formData.get("gender") || "",
-                "Birthdate": formData.get("birthdate") || "",
-                "ID number": formData.get("idnumber") || "",
-                "Afdeling": formData.get("department") || "Algemeen",
-                "Status": "Actief"
-            };
+            try {
+                if (isLoading) {
+                    alert('Please wait, operation in progress...');
+                    return;
+                }
 
-            // Add to volunteers array
-            volunteers.push(newVolunteer);
+                // Collect form data
+                const formData = new FormData(addVolunteerForm);
+                const newVolunteer = {
+                    "first name": formData.get("firstname")?.trim() || "",
+                    "name": formData.get("surname")?.trim() || "",
+                    "ID number": formData.get("idnumber")?.trim() || "",
+                    "gender": formData.get("gender") || "",
+                    "birthdate": formData.get("birthdate") || ""
+                };
 
-            // Re-render table
-            renderVolunteerTable();
+                // Validate required fields
+                if (!newVolunteer["first name"] || !newVolunteer["name"] || !newVolunteer["ID number"]) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
 
-            // Reset form + close modal
-            addVolunteerForm.reset();
-            addVolunteerModal.style.display = "none";
+                isLoading = true;
+
+                // Insert into Supabase
+                const { data, error } = await supabase
+                    .from('volunteers')
+                    .insert([newVolunteer]);
+
+                if (error) {
+                    console.error('Error adding volunteer:', error);
+                    alert(`Error: ${error.message}`);
+                    isLoading = false;
+                    return;
+                }
+
+                // Re-fetch and re-render table
+                await fetchVolunteers();
+
+                // Reset form + close modal
+                addVolunteerForm.reset();
+                if (addVolunteerModal) {
+                    addVolunteerModal.style.display = "none";
+                }
+                alert('Vrijwilliger succesvol toegevoegd!');
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert(`Error: ${err.message || 'Failed to add volunteer'}`);
+                isLoading = false;
+            }
         });
     }
 
     // Render volunteer table from data
     const renderVolunteerTable = () => {
         volunteerTableBody.innerHTML = "";
+
+        if (volunteers.length === 0) {
+            volunteerTableBody.innerHTML = '<tr><td colspan="4" class="px-lg py-md text-gray-500">No volunteers found</td></tr>';
+            return;
+        }
+
         volunteers.forEach((volunteer) => {
-            const row = document.createElement("tr");
-            row.className = "hover:bg-surface-container-lowest transition-colors";
+            try {
+                const row = document.createElement("tr");
+                row.className = "hover:bg-surface-container-lowest transition-colors";
 
-            const fullName = `${volunteer["First name"]} ${volunteer["Name"]}`;
-            const idNumber = volunteer["ID number"] || "";
-            const department = volunteer["Afdeling"] || "Onbekend";
-            const status = volunteer["Status"] || "Actief";
-            const statusColor = status === "Actief" ? "text-green-600" : "text-gray-500";
+                const fullName = `${volunteer["first name"] || ''} ${volunteer["name"] || ''}`.trim();
+                const idNumber = volunteer["ID number"] || "-";
+                const gender = volunteer["gender"] || "-";
+                const birthdate = volunteer["birthdate"] || "-";
 
-            row.innerHTML = `
-                <td class="px-lg py-md">${fullName}</td>
-                <td class="px-lg py-md">${idNumber}</td>
-                <td class="px-lg py-md">${department}</td>
-                <td class="px-lg py-md ${statusColor}">${status}</td>
-            `;
+                row.innerHTML = `
+                    <td class="px-lg py-md">${fullName || 'Unknown'}</td>
+                    <td class="px-lg py-md">${idNumber}</td>
+                    <td class="px-lg py-md">${gender}</td>
+                    <td class="px-lg py-md">${birthdate}</td>
+                `;
 
-            volunteerTableBody.appendChild(row);
+                volunteerTableBody.appendChild(row);
+            } catch (err) {
+                console.error('Error rendering row:', err);
+            }
         });
     };
 
-    // Initial render
-    renderVolunteerTable();
+    // Initial fetch and render
+    await fetchVolunteers();
 
-    // Expose renderVolunteerTable globally for use in script.js if needed
+    // Expose functions globally for use in script.js if needed
     window.renderVolunteerTable = renderVolunteerTable;
+    window.fetchVolunteers = fetchVolunteers;
+
+    console.log('Volunteers module initialized successfully');
 })();
