@@ -16,10 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("volunteerGender").textContent = volunteerData.gender === "M" ? "Man" : "Vrouw";
     document.getElementById("volunteerBirthDate").textContent = volunteerData.birthDate;
 
-    // QR Code genereren met ID
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(volunteerData.idNumber)}`;
+    // QR Code genereren met link naar vrijwilliger profiel
+    const profileUrl = `${window.location.origin}${window.location.pathname.replace('vltr-profiel.html', 'vltr-profiel.html')}?volunteer=${encodeURIComponent(volunteerData.idNumber)}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(profileUrl)}`;
     document.getElementById("volunteerQR").src = qrCodeUrl;
-    document.getElementById("volunteerBadgeID").textContent = volunteerData.idNumber;
+
+    // Haal code uit fullRecord of gebruik standaard waarde
+    const volunteerCode = volunteerData.fullRecord?.code || volunteerData.idNumber;
+    document.getElementById("volunteerBadgeID").textContent = `#${volunteerCode}`;
   }
 });
 
