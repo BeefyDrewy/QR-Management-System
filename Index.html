@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Vrijwilligers Database | Suriname Red Cross</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Tailwind Config -->
+  <script src="tailwind-config.js"></script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+
+  <!-- TopAppBar -->
+  <header class="bg-surface border-b border-outline-variant flex justify-between items-center px-margin-desktop w-full h-16 sticky top-0 z-50">
+    
+    <div class="flex items-center gap-md">
+      <span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+
+      <h1 class="font-headline-md text-headline-md font-bold text-primary">
+        Suriname Red Cross
+      </h1>
+    </div>
+
+    <div class="hidden md:flex gap-lg">
+      <span class="text-secondary font-label-md text-label-md cursor-pointer hover:bg-surface-container-low px-3 py-2 rounded-lg">
+        Dashboard
+      </span>
+
+      <span class="text-primary font-bold font-label-md text-label-md cursor-pointer hover:bg-surface-container-low px-3 py-2 rounded-lg">
+        Volunteers
+      </span>
+
+      <span class="text-secondary font-label-md text-label-md cursor-pointer hover:bg-surface-container-low px-3 py-2 rounded-lg">
+        Settings
+      </span>
+    </div>
+
+    <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+      <img
+        class="w-full h-full object-cover"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyRSsZgySWxxcXSsJFWdRFhVUL3DIiqa3mOgzQRkSoXd93glbmeveoasmu5EkvV144V6BsZhjuO3HZQAwewZ-Vuc_ug1_OuAnG4-EGtUfKIraO7Xmr2xYOgKb9l37IQK4kunrq2RCp-ugdVmEydY6GzwOcnPh8kclRW4YtVq9NUpG8OMUhAgS6ZATP6FcALX0CR5jzIdWOQ9-68YGG2h8yMIzgrrUbZUAz5zvzVVE-bUbJMTwOWBMJGarQc2I3C1Y22U0omEDM_yo"
+        alt="Admin"
+      >
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 px-margin-desktop py-lg">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-lg">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg">
+          Vrijwilligers Database
+        </h2>
+
+        <p class="font-body-md text-secondary">
+          Beheer en bekijk alle actieve hulpverleners.
+        </p>
+      </div>
+
+      <button class="btn-add-volunteer bg-primary text-on-primary px-lg py-sm rounded-lg flex items-center gap-sm cursor-pointer">
+        <span class="material-symbols-outlined">person_add</span>
+        Vrijwilliger Toevoegen
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-lg">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Zoek op naam of ID..."
+        class="w-full px-md py-sm border border-outline-variant rounded-lg"
+      >
+    </div>
+
+    <!-- Table -->
+    <div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
+
+      <table class="w-full text-left border-collapse">
+
+        <thead class="bg-surface-container-low border-b border-outline-variant">
+          <tr>
+            <th class="px-lg py-md">Vrijwilliger</th>
+            <th class="px-lg py-md">ID Nummer</th>
+            <th class="px-lg py-md">Afdeling</th>
+            <th class="px-lg py-md">Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="volunteerTable">
+
+          <tr class="hover:bg-surface-container-lowest transition-colors">
+            <td class="px-lg py-md">Johan Klaver</td>
+            <td class="px-lg py-md">SRK-2024-0012</td>
+            <td class="px-lg py-md">Rampenbestrijding</td>
+            <td class="px-lg py-md text-green-600">Actief</td>
+          </tr>
+
+          <tr class="hover:bg-surface-container-lowest transition-colors">
+            <td class="px-lg py-md">Amara Wijdenbosch</td>
+            <td class="px-lg py-md">SRK-2024-0089</td>
+            <td class="px-lg py-md">Eerste Hulp</td>
+            <td class="px-lg py-md text-green-600">Actief</td>
+          </tr>
+
+          <tr class="hover:bg-surface-container-lowest transition-colors">
+            <td class="px-lg py-md">Kenneth Pinas</td>
+            <td class="px-lg py-md">SRK-2023-0451</td>
+            <td class="px-lg py-md">Sociale Hulp</td>
+            <td class="px-lg py-md text-gray-500">Inactief</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Add Volunteer Modal -->
+  <div class="modal-add-volunteer fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+    <div class="bg-surface rounded-xl p-lg max-w-md w-full mx-lg">
+      <div class="flex justify-between items-center mb-lg">
+        <h3 class="font-headline-md text-headline-md">Vrijwilliger Toevoegen</h3>
+        <button class="btn-close-modal text-secondary hover:text-on-background text-2xl cursor-pointer">&times;</button>
+      </div>
+
+      <form class="form-add-volunteer space-y-md">
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">Voornaam *</label>
+          <input type="text" name="firstname" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
+        </div>
+
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">Achternaam *</label>
+          <input type="text" name="surname" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
+        </div>
+
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">ID Nummer *</label>
+          <input type="text" name="idnumber" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
+        </div>
+
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">Geslacht *</label>
+          <select name="gender" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
+            <option value="">Selecteer geslacht</option>
+            <option value="M">Man</option>
+            <option value="F">Vrouw</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">Geboortedatum *</label>
+          <input type="date" name="birthdate" required class="w-full px-md py-sm border border-outline-variant rounded-lg">
+        </div>
+
+        <div>
+          <label class="block font-label-lg text-label-lg mb-sm">Afdeling</label>
+          <select name="department" class="w-full px-md py-sm border border-outline-variant rounded-lg">
+            <option value="Algemeen">Algemeen</option>
+            <option value="Rampenbestrijding">Rampenbestrijding</option>
+            <option value="Eerste Hulp">Eerste Hulp</option>
+            <option value="Sociale Hulp">Sociale Hulp</option>
+            <option value="Bloedinzameling">Bloedinzameling</option>
+          </select>
+        </div>
+
+        <div class="flex gap-md pt-md">
+          <button type="submit" class="flex-1 bg-primary text-on-primary px-lg py-sm rounded-lg font-label-lg">Toevoegen</button>
+          <button type="button" class="btn-close-modal flex-1 bg-outline text-on-background px-lg py-sm rounded-lg font-label-lg cursor-pointer">Annuleren</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="database.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
