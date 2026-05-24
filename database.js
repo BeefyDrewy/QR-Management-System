@@ -1,9 +1,9 @@
 // Vrijwilligers Database Management System
 // Loads volunteer data from Supabase and manages adding new volunteers
 
+import { supabase } from './supabaseClient.js';
+
 (async function () {
-    // Initialize Supabase client
-    const supabase = window.supabaseClient;
     
     // Check if Supabase client is available
     if (!supabase) {
@@ -174,12 +174,26 @@
                 const gender = volunteer["gender"] || "-";
                 const birthdate = volunteer["birthdate"] || "-";
 
-                row.innerHTML = `
-                    <td class="px-lg py-md">${fullName || 'Unknown'}</td>
-                    <td class="px-lg py-md">${idNumber}</td>
-                    <td class="px-lg py-md">${gender}</td>
-                    <td class="px-lg py-md">${birthdate}</td>
-                `;
+                const nameTd = document.createElement("td");
+                nameTd.className = "px-lg py-md";
+                nameTd.textContent = fullName || 'Unknown';
+
+                const idTd = document.createElement("td");
+                idTd.className = "px-lg py-md";
+                idTd.textContent = idNumber;
+
+                const genderTd = document.createElement("td");
+                genderTd.className = "px-lg py-md";
+                genderTd.textContent = gender;
+
+                const birthdateTd = document.createElement("td");
+                birthdateTd.className = "px-lg py-md";
+                birthdateTd.textContent = birthdate;
+
+                row.appendChild(nameTd);
+                row.appendChild(idTd);
+                row.appendChild(genderTd);
+                row.appendChild(birthdateTd);
 
                 // Add click event listener
                 row.addEventListener("click", () => {
