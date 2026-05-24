@@ -1,16 +1,22 @@
-// Search filter
-const searchInput = document.getElementById("searchInput");
+/**
+ * Search Filter Module
+ * 
+ * Filters the volunteer table based on search input
+ */
 
-searchInput.addEventListener("input", (e) => {
-  const query = e.target.value.toLowerCase();
+const searchInput = document.getElementById('searchInput');
 
-  document.querySelectorAll("#volunteerTable tr").forEach(row => {
-    const text = row.innerText.toLowerCase();
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
 
-    if (text.includes(query)) {
-      row.style.display = "table-row";
-    } else {
-      row.style.display = "none";
-    }
+    document.querySelectorAll('#volunteerTable tr').forEach((row) => {
+      const text = row.innerText.toLowerCase();
+
+      // Show or hide row based on search query
+      row.style.display = text.includes(query) ? 'table-row' : 'none';
+    });
   });
-});
+}
+
+console.log('Search filter module loaded');
